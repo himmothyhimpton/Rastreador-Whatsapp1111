@@ -1,0 +1,19 @@
+{
+  "name": "whatsapponlineviewer-android",
+  "version": "1.0.0",
+  "description": "Not an actual Node app - placeholder so tooling that expects package.json won't fail. The real project is an Android app (Kotlin).",
+  "private": true,
+  "scripts": {
+    "note": "This repository is an Android Kotlin project. Open in Android Studio.",
+    "netlify:build": "echo Netlify functions-only build",
+    "preinstall": "node preinstall.js"
+  },
+  "dependencies": {
+    "stripe": "^16.6.0"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "author": "Generated",
+  "license": "MIT"
+}

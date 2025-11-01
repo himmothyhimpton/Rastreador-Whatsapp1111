@@ -1,0 +1,26 @@
+// Top-level build.gradle — do NOT include `android {}` here.
+// Configure repositories and the Android/Kotlin Gradle plugin classpaths.
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Align AGP with Gradle 8.7; use Kotlin 2.0.x which AGP supports broadly
+        classpath 'com.android.tools.build:gradle:8.7.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
