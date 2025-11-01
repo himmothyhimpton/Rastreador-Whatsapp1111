@@ -1,0 +1,26 @@
+// Top-level build.gradle — do NOT include `android {}` here.
+// Configure repositories and the Android/Kotlin Gradle plugin classpaths.
+// Updated: 2024-12-19 to prove push capability
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.3.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.24"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

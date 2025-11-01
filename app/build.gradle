@@ -1,0 +1,99 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
+
+android {
+    compileSdk 34
+
+    // Enable buildConfig and viewBinding
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
+
+    defaultConfig {
+        applicationId "com.example.whatsapponlineviewer"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // provide stripe publishable key via BuildConfig for easy access
+        buildConfigField "String", "STRIPE_PUBLISHABLE_KEY", "\"pk_live_51SJvpVAgq1ywLQy0IPutpWNtY9AmGKijmeu0MgxOxsNQEXW1nsdrLuUS0o7aU2Cnki6OwkZ1YhV10nCVcBgRuWjO00jh0pFCLY\""
+        buildConfigField "String", "CREATOR_UNLOCK_CODE", "\"2468\""
+        // backend base url to create PaymentIntent (DO NOT use Stripe secret in app)
+        // Replace with your deployed server URL for production.
+        // For local testing use http://10.0.2.2:4242/ when running on Android emulator
+        // or your machine LAN IP when testing on a physical device.
+        // Netlify site base URL; functions are routed via netlify.toml
+        buildConfigField "String", "BACKEND_BASE_URL", "\"https://lovely-longma-d79e1b.netlify.app/\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    namespace 'com.example.whatsapponlineviewer'
+}
+
+// Force Kotlin coroutines to a version compatible with Kotlin 2.1.0 metadata
+configurations.all {
+    resolutionStrategy {
+        force 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1'
+        force 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.1'
+        force 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    }
+}
+
+dependencies {
+    // Align Kotlin stdlib to plugin version 1.9.24
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.24"
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    
+    // Stripe SDK - pin to a version compiled with Kotlin <= 2.0 metadata
+    // Further downgrade to avoid Kotlin 2.1.0 metadata causing D8 errors
+    implementation 'com.stripe:stripe-android:21.20.0'
+
+    // Explicitly declare coroutines to ensure alignment
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.1'
+
+    // Add constraints to keep coroutines modules at 1.8.1
+    constraints {
+        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1')
+        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.8.1')
+        implementation('org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1')
+    }
+
+    
+    // For API calls
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.2.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-process:2.6.2'
+    implementation 'androidx.activity:activity:1.8.2'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
+    implementation 'androidx.fragment:fragment-ktx:1.6.2'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}

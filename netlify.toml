@@ -1,0 +1,18 @@
+[build]
+  publish = "public"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/create-payment-intent"
+  to = "/.netlify/functions/create-payment-intent"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/premium-status"
+  to = "/.netlify/functions/premium-status"
+  status = 200
+  force = true
